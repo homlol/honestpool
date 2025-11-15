@@ -111,7 +111,7 @@ if __name__ == "__main__":
 		out_yellow('----------------------- BITCOIN PUZZLE POOL от HoMLoL -----------------------')
 		out_yellow('-----------------------------------------------------------------------------')
 		out_yellow('-- Site: https://honestpool.ru                                             --')
-		out_yellow('-- Git: https://honestpool.ru                                              --')
+		out_yellow('-- Git: https://github.com/homlol/honestpool                               --')
 		out_yellow('-- VanitySearch: https://github.com/FixedPaul/VanitySearch-Bitcrack        --')
 		out_yellow('-- Questions/Offers: TG @homlol_official                                   --')
 		out_yellow('-- Group: TG @homlol_pool                                                  --')
