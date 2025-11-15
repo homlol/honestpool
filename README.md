@@ -4,6 +4,11 @@
 
 Добро пожаловать в честный пул с открытым исходным кодом, использующий ПО VanitySearch от [https://github.com/FixedPaul/VanitySearch-Bitcrack](https://github.com/FixedPaul/VanitySearch-Bitcrack), а также открытым API. Всё максимально честно, открыто и прозрачно!
 
+## INFO
+- Site: https://honestpool.ru
+- Questions/Offers: TG @homlol_official
+- Group: TG @homlol_pool
+
 ## Как это работает?
 
 Диапазоны пазлов разбиты на области. Для 71-го пазла это 67 108 864 областей. Для каждой области генерируются 5 проверочных адресов, которые нужно указать, чтобы завершить область.
@@ -91,3 +96,11 @@
   "text": "You have successfully completed the range 1 in 71 puzzles"
 }
 ```
+Лимит: **3 запроса за 2 секунды**
+При привышении лимита более 10-ти раз за 7 дней, ваш ip будет заблокирован на 1 час.
+
+# На оплату сервера и мотивацию дальше поддерживать проект
+### BTC: bc1q3plfvghrdsh768h3ukejs8zy5ev4jsr76tjtgk
+### ETH: 0xa97888173A0A41242294299BE1b81Fe72433ac06
+### USDT(TRC20): TNf8KHmmwEiVGSQyqVyKuZ8f95zEdnb3ND
+### TON: UQDVvbUuncGxvGEqUUuchRfH7a_p8I3S7_6dMsuTkIw7amtL
