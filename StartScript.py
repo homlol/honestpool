@@ -6,31 +6,35 @@ import re
 import time
 
 def parse_key_file(filename):
-    """
-    Считывает файл с Bitcoin адресами и приватными ключами,
-    возвращает массив с парами (адрес, приватный ключ в HEX)
-    """
-    result = {}
-    
-    try:
-        with open(filename, 'r', encoding='utf-8') as file:
-            content = file.read()
-        
-        # Используем регулярные выражения для поиска адресов и ключей
-        pattern = r'Public Addr: ([1-9A-HJ-NP-Za-km-z]+)\s*Priv \(WIF\): [^\n]+\s*Priv \(HEX\): 0x([0-9A-Fa-f]+)'
-        matches = re.findall(pattern, content)
-        
-        for address, priv_key_hex in matches:
-            # Убираем ведущие нули из HEX ключа
-            clean_priv_key = priv_key_hex.lstrip('0') or '0'
-            result[address] = clean_priv_key
-            
-    except FileNotFoundError:
-        print(f"Ошибка: Файл {filename} не найден")
-    except Exception as e:
-        print(f"Ошибка при чтении файла: {e}")
-    
-    return result
+	"""
+	Считывает файл с Bitcoin адресами и приватными ключами,
+	возвращает массив с парами (адрес, приватный ключ в HEX)
+	"""
+	result = {}
+	
+	try:
+		with open(filename, 'r', encoding='utf-8') as file:
+			content = file.read()
+		
+		# Используем регулярные выражения для поиска адресов и ключей
+		pattern = r'Public Addr: ([1-9A-HJ-NP-Za-km-z]+)\s*Priv \(WIF\): [^\n]+\s*Priv \(HEX\): 0x([0-9A-Fa-f]+)'
+		matches = re.findall(pattern, content)
+		
+		for address, priv_key_hex in matches:
+			# Убираем ведущие нули из HEX ключа
+			clean_priv_key = priv_key_hex.lstrip('0') or '0'
+			result[address] = clean_priv_key
+			
+	except FileNotFoundError:
+		print(f"Ошибка: Файл {filename} не найден")
+		with open("LOG_ERROR.txt", "a", encoding="utf-8") as f:
+			f.write(f'\nERROR: Ошибка: Файл {filename} не найден\n')
+	except Exception as e:
+		print(f"Ошибка при чтении файла: {e}")
+		with open("LOG_ERROR.txt", "a", encoding="utf-8") as f:
+			f.write(f'\nERROR: Ошибка при чтении файла: {e}\n')
+	
+	return result
 
 def getRange(idPuzzle, numberRange):
 	url = f"https://honestpool.ru/api/v1/getRange?idPuzzle={idPuzzle}&numberRange={numberRange}"
@@ -39,6 +43,8 @@ def getRange(idPuzzle, numberRange):
 		return response.json()
 	except Exception as e:
 		print(e)
+		with open("LOG_ERROR.txt", "a", encoding="utf-8") as f:
+			f.write(f'\nERROR: {e}\n')
 	else:
 		pass
 	finally:
@@ -52,6 +58,8 @@ def setRange(idPuzzle, numberRange, checkProofAddresses = {}, comment = ''):
 		return response.json()
 	except Exception as e:
 		print(e)
+		with open("LOG_ERROR.txt", "a", encoding="utf-8") as f:
+			f.write(f'\nERROR: {e}\n')
 	else:
 		pass
 	finally:
@@ -115,7 +123,10 @@ if __name__ == "__main__":
 		out_yellow('-- VanitySearch: https://github.com/FixedPaul/VanitySearch-Bitcrack        --')
 		out_yellow('-- Questions/Offers: TG @homlol_official                                   --')
 		out_yellow('-- Group: TG @homlol_pool                                                  --')
-		out_yellow('-- Donate BTC: bc1qdn2wng73y80phr7kul5aa24n850f5c82zwq27h                  --')
+		out_yellow('-- Donate BTC: bc1q3plfvghrdsh768h3ukejs8zy5ev4jsr76tjtgk                  --')
+		out_yellow('-- Donate ETH: 0xa97888173A0A41242294299BE1b81Fe72433ac06                  --')
+		out_yellow('-- Donate USDT (TRC 20): TNf8KHmmwEiVGSQyqVyKuZ8f95zEdnb3ND                --')
+		out_yellow('-- Donate TON: UQDVvbUuncGxvGEqUUuchRfH7a_p8I3S7_6dMsuTkIw7amtL            --')
 		out_yellow('-----------------------------------------------------------------------------')
 
 		_getRange = getRange(__PUZZLE__, __NUMBER__)
@@ -187,19 +198,19 @@ if __name__ == "__main__":
 							__NUMBER__ = 'random'
 						print(_setRange['text'])
 						out_green('Успешно пройденный диапазон!')
-						out_yellow('Запуск через 5 секунд... Ожидайте...')
-						time.sleep(5) # Задержка на 5 секунд
+						out_yellow('Запуск через 3 секунд... Ожидайте...')
+						time.sleep(3) # Задержка на 3 секунд
 					else:
 						with open("LOG_ERROR.txt", "a", encoding="utf-8") as f:
 							f.write(f'\nERROR: {_setRange['text']}\n')
 						out_red(f'ERROR: {_setRange['text']}')
-						out_yellow('Запуск через 5 секунд... Ожидайте...')
-						time.sleep(5) # Задержка на 5 секунд
+						out_yellow('Запуск через 3 секунд... Ожидайте...')
+						time.sleep(3) # Задержка на 3 секунд
 		else:
 			if __NUMBER__ != 'random':
 				__NUMBER__ = 'random'
 			out_red(f'ERROR: {_getRange['text']}')
 			with open("LOG_ERROR.txt", "a", encoding="utf-8") as f:
 				f.write(f'\nERROR: {_getRange['text']}\n')
-			out_yellow('Запуск через 5 секунд... Ожидайте...')
-			time.sleep(5) # Задержка на 5 секунд
+			out_yellow('Запуск через 3 секунд... Ожидайте...')
+			time.sleep(3) # Задержка на 3 секунд
