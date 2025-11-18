@@ -127,7 +127,7 @@ If the limit is exceeded more than 10 times in 7 days, your IP will be blocked f
 ### USDT(TRC20): TNf8KHmmwEiVGSQyqVyKuZ8f95zEdnb3ND
 ### TON: UQDVvbUuncGxvGEqUUuchRfH7a_p8I3S7_6dMsuTkIw7amtL
 
-#RU
+# RU
 
 **Честный BITCOIN PUZZLE POOL от HoMLoL**
 
