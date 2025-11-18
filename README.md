@@ -1,6 +1,6 @@
 # HonestPool
 
-#EN
+# EN
 
 **Honest BITCOIN PUZZLE POOL by HoMLoL**
 
