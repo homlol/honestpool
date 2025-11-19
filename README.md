@@ -11,6 +11,15 @@ Welcome to the honest, open-source pool using VanitySearch software from [https:
 - Questions/Offers: TG @homlol_official
 - Group: TG @homlol_pool
 
+## Run
+```
+pip install -r requirements.txt
+python StartScript.py
+python StartScript.py -p 71
+python StartScript.py -p 71 -n 487238
+```
+start.bat
+
 ## How does it work?
 
 Puzzle ranges are divided into segments. For Puzzle 71, this means 67,108,864 segments. For each segment, 5 verification addresses are generated that need to be provided to complete the segment.
@@ -137,6 +146,15 @@ If the limit is exceeded more than 10 times in 7 days, your IP will be blocked f
 - Site: https://honestpool.ru
 - Questions/Offers: TG @homlol_official
 - Group: TG @homlol_pool
+
+## Запуск
+```
+pip install -r requirements.txt
+python StartScript.py
+python StartScript.py -p 71
+python StartScript.py -p 71 -n 487238
+```
+start.bat
 
 ## Как это работает?
 
