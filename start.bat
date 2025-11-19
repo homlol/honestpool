@@ -1,2 +1,2 @@
-StartScript.py -p 71
+python StartScript.py
 pause
