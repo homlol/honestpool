@@ -1,5 +1,9 @@
 # HonestPool
 
+<p align="center">
+  <img src="https://honestpool.ru/assets/images/main_honestpool_logo.png" />
+</p>
+
 # EN
 
 **Honest BITCOIN PUZZLE POOL by HoMLoL**
