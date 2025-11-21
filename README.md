@@ -1,7 +1,7 @@
 # HonestPool
 
 <p align="center">
-  <img src="https://honestpool.ru/assets/images/main_honestpool_logo.png" />
+  <img src="https://honestpool.ru/assets/images/main_honestpool_logo.png" width="300px" height="300px" />
 </p>
 
 # EN
