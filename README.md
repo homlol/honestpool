@@ -54,6 +54,8 @@ options:
                         Puzzle number. Default is 71
   -n NUMBER, --number NUMBER
                         Segment number. Default is random
+  -g NUMBER, --gpu NUMBER
+                        Number GPU. Default is 0
   -c COMMENT, --comment COMMENT
                         Comment after completing the segment
   -t, --test            TEST MODE FOR PUZZLE №70, CONSISTS OF 17179869184 SEGMENTS, FOR FAST SEGMENT COMPLETION,
@@ -190,6 +192,8 @@ options:
                         Номер пазла. По умолчанию 71
   -n NUMBER, --number NUMBER
                         Номер области(части). По умолчанию random
+  -g NUMBER, --gpu NUMBER
+                        Номер GPU. По умолчанию 0
   -c COMMENT, --comment COMMENT
                         Комментарий после завершения области
   -t, --test            ТЕСТОВЫЙ РЕЖИМ ПАЗЛА №70, СОСТОИТ ИЗ 17179869184 ОБЛАСТЕЙ, ДЛЯ БЫСТРОГО ПРОХОЖДЕНИЯ
