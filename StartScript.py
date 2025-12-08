@@ -39,7 +39,7 @@ def parse_key_file(filename):
 			content = file.read()
 		
 		# Используем регулярные выражения для поиска адресов и ключей
-		pattern = r'Public Addr: ([1-9A-HJ-NP-Za-km-z]+)\s*Priv \(WIF\): [^\n]+\s*Priv \(HEX\): 0x([0-9A-Fa-f]+)'
+		pattern = r"Public Addr: ([1-9A-HJ-NP-Za-km-z]+)\s*Priv \(WIF\): [^\n]+\s*Priv \(HEX\): 0x([0-9A-Fa-f]+)"
 		matches = re.findall(pattern, content)
 		
 		for address, priv_key_hex in matches:
@@ -50,11 +50,11 @@ def parse_key_file(filename):
 	except FileNotFoundError:
 		print(f"Ошибка: Файл {filename} не найден")
 		with open("LOG_ERROR.txt", "a", encoding="utf-8") as f:
-			f.write(f'\nERROR: Ошибка: Файл {filename} не найден\n')
+			f.write(f"\nERROR: Ошибка: Файл {filename} не найден\n")
 	except Exception as e:
 		print(f"Ошибка при чтении файла: {e}")
 		with open("LOG_ERROR.txt", "a", encoding="utf-8") as f:
-			f.write(f'\nERROR: Ошибка при чтении файла: {e}\n')
+			f.write(f"\nERROR: Ошибка при чтении файла: {e}\n")
 	
 	return result
 
@@ -66,7 +66,7 @@ def getRange(idPuzzle, numberRange):
 	except Exception as e:
 		print(e)
 		with open("LOG_ERROR.txt", "a", encoding="utf-8") as f:
-			f.write(f'\nERROR: {e}\n')
+			f.write(f"\nERROR: {e}\n")
 	else:
 		pass
 	finally:
@@ -81,7 +81,7 @@ def setRange(idPuzzle, numberRange, checkProofAddresses = {}, comment = ''):
 	except Exception as e:
 		print(e)
 		with open("LOG_ERROR.txt", "a", encoding="utf-8") as f:
-			f.write(f'\nERROR: {e}\n')
+			f.write(f"\nERROR: {e}\n")
 	else:
 		pass
 	finally:
@@ -113,10 +113,11 @@ if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description="Параметры для работы скрипта.")
 
 	# Добавляем аргументы
-	parser.add_argument('-p', '--puzzle', type=int, default=71, help='Номер пазла. По умолчанию 71')
-	parser.add_argument('-n', '--number', type=str, default='random', help='Номер области(части). По умолчанию random')
-	parser.add_argument('-c', '--comment', type=str, default='BITCOIN PUZZLE HoMLoL POOL bc1qdn2wng73y80phr7kul5aa24n850f5c82zwq27h', help='Комментарий после завершения области')
-	parser.add_argument('-t', '--test', action="store_true", help='ТЕСТОВЫЙ РЕЖИМ ПАЗЛА №70, СОСТОИТ ИЗ 17179869184 ОБЛАСТЕЙ, ДЛЯ БЫСТРОГО ПРОХОЖДЕНИЯ ОБЛАСТИ, КАЖДАЯ ОБЛАСТЬ 2^36. Для того чтобы был FOUND нужно указать номер области -n 11063563977. По умолчанию выключен')
+	parser.add_argument("-g", "--gpu", type=int, default=0, help="Номер GPU. По умолчанию 0")
+	parser.add_argument("-p", "--puzzle", type=int, default=71, help="Номер пазла. По умолчанию 71")
+	parser.add_argument("-n", "--number", type=str, default="random", help="Номер области(части). По умолчанию random")
+	parser.add_argument("-c", "--comment", type=str, default="BITCOIN PUZZLE HoMLoL POOL bc1qdn2wng73y80phr7kul5aa24n850f5c82zwq27h", help="Комментарий после завершения области")
+	parser.add_argument("-t", "--test", action="store_true", help="ТЕСТОВЫЙ РЕЖИМ ПАЗЛА №70, СОСТОИТ ИЗ 17179869184 ОБЛАСТЕЙ, ДЛЯ БЫСТРОГО ПРОХОЖДЕНИЯ ОБЛАСТИ, КАЖДАЯ ОБЛАСТЬ 2^36. Для того чтобы был FOUND нужно указать номер области -n 11063563977. По умолчанию выключен")
 
 	# Парсим аргументы
 	args = parser.parse_args()
@@ -124,13 +125,17 @@ if __name__ == "__main__":
 	__TEST__ = args.test
 
 	if __TEST__: # ТЕСТОВЫЙ РЕЖИМ ПАЗЛА №70, СОСТОИТ ИЗ 17179869184 ОБЛАСТЕЙ, ДЛЯ БЫСТРОГО ПРОХОЖДЕНИЯ ОБЛАСТИ, КАЖДАЯ ОБЛАСТЬ 2^36. Для того чтобы был FOUND нужно указать номер области -n 11063563977
+		__GPU__ = args.gpu
 		__PUZZLE__ = 70
 		__NUMBER__ = args.number
 		__COMMENT__ = args.comment
 	else:
+		__GPU__ = args.gpu
 		__PUZZLE__ = args.puzzle
 		__NUMBER__ = args.number
 		__COMMENT__ = args.comment
+
+	name_in_file = f"in_gpu_{__GPU__}.txt"
 
 	while True:
 		os.system('cls')
@@ -159,25 +164,25 @@ if __name__ == "__main__":
 			numberRange_for_send = _getRange['numberRange']
 
 			if __TEST__ or __PUZZLE__ == 70:
-				print('\n')
-				out_yellow('-' * 29)
-				out_yellow('- !!!WARNING!!! - TEST MODE -')
-				out_yellow('-' * 29)
-				print('\n')
+				print("\n")
+				out_yellow("-" * 29)
+				out_yellow("- !!!WARNING!!! - TEST MODE -")
+				out_yellow("-" * 29)
+				print("\n")
 
-			print(f'\033[0m* ID puzzle: {_getRange['idPuzzle']}')
-			print(f'* Range number: {_getRange['numberRange']}')
-			print(f'* Target Address: \033[42m\033[37m{_getRange['targetAddress']}')
-			print(f'\033[0m* Proof addresses:')
-			file_path = f'{main_path}{name_in_file}'
+			print(f"\033[0m* ID puzzle: {_getRange['idPuzzle']}")
+			print(f"* Range number: {_getRange['numberRange']}")
+			print(f"* Target Address: \033[42m\033[37m{_getRange['targetAddress']}")
+			print(f"\033[0m* Proof addresses:")
+			file_path = f"{main_path}{name_in_file}"
 			with open(file_path, 'w', encoding='utf-8') as file:
 				file.write(str(_getRange['targetAddress'])+"\n") # TARGET ADDRESS
 				for i in _getRange['proofAddresses']:
 					file.write(str(i)+"\n") # PROOF ADDRESS
-					print(f'\t - {i}')
-			print(f'* Bits: {_getRange['bits']}')
-			print(f'* Range hex: {_getRange['startRangeHex']}:{_getRange['endRangeHex']}')
-			print(f'* Start VanitySearch: {_getRange['bits']}')
+					print(f"\t - {i}")
+			print(f"* Bits: {_getRange['bits']}")
+			print(f"* Range hex: {_getRange['startRangeHex']}:{_getRange['endRangeHex']}")
+			print(f"* Start VanitySearch: {_getRange['bits']}")
 
 			#tmp file output
 			name_file_output = f"out_{_getRange['idPuzzle']}_{_getRange['numberRange']}.txt"
@@ -186,24 +191,24 @@ if __name__ == "__main__":
 			if not os.path.exists(f"{main_path}tmp_files_output_{_getRange['idPuzzle']}"):
 				os.makedirs(f"{main_path}tmp_files_output_{_getRange['idPuzzle']}")
 
-			os.system(f'{main_path}VanitySearch.exe -gpuId 0 -i {main_path}{name_in_file} -o {name_out_file} -start {_getRange['startRangeHex']} -range {_getRange['bits']}')
+			os.system(f"{main_path}VanitySearch.exe -gpuId {__GPU__} -i {main_path}{name_in_file} -o {name_out_file} -start {_getRange['startRangeHex']} -range {_getRange['bits']}")
 
 
 			key_pairs = parse_key_file(f'{name_out_file}')
 
 			if __ADDRESS__ in key_pairs: # если нашли основной ключ!!!!
-				out_green('-' * 101)
-				out_green('-' * 101)
-				out_green('-- !!! НАЙДЕНО !!! !!! НАЙДЕНО !!! !!! НАЙДЕНО !!! !!! НАЙДЕНО !!! !!! НАЙДЕНО !!! !!! НАЙДЕНО !!! --')
-				out_green('--                                                                                                 --')
-				out_green('--                                                                                                 --')
-				out_green(f'-- ADDRESS: {__ADDRESS__}')
-				out_green(f'-- PRIVATE KEY: {key_pairs[__ADDRESS__]}')
-				out_green('--                                                                                                 --')
-				out_green('--                                                                                                 --')
-				out_green('-- !!! НАЙДЕНО !!! !!! НАЙДЕНО !!! !!! НАЙДЕНО !!! !!! НАЙДЕНО !!! !!! НАЙДЕНО !!! !!! НАЙДЕНО !!! --')
-				out_green('-' * 101)
-				out_green('-' * 101)
+				out_green("-" * 101)
+				out_green("-" * 101)
+				out_green("-- !!! НАЙДЕНО !!! !!! НАЙДЕНО !!! !!! НАЙДЕНО !!! !!! НАЙДЕНО !!! !!! НАЙДЕНО !!! !!! НАЙДЕНО !!! --")
+				out_green("--                                                                                                 --")
+				out_green("--                                                                                                 --")
+				out_green(f"-- ADDRESS: {__ADDRESS__}")
+				out_green(f"-- PRIVATE KEY: {key_pairs[__ADDRESS__]}")
+				out_green("--                                                                                                 --")
+				out_green("--                                                                                                 --")
+				out_green("-- !!! НАЙДЕНО !!! !!! НАЙДЕНО !!! !!! НАЙДЕНО !!! !!! НАЙДЕНО !!! !!! НАЙДЕНО !!! !!! НАЙДЕНО !!! --")
+				out_green("-" * 101)
+				out_green("-" * 101)
 				with open("FOUND!!!!!!!!.txt", "a", encoding="utf-8") as f:
 					f.write(f"\n-------------------- FOUND --------------------\nPRIVATE KEY HEX: {key_pairs[__ADDRESS__]}\nADDRESS: {__ADDRESS__}\n----------------------------------------\n")
 				break;
@@ -219,20 +224,20 @@ if __name__ == "__main__":
 						if __NUMBER__ != 'random':
 							__NUMBER__ = 'random'
 						print(_setRange['text'])
-						out_green('Успешно пройденный диапазон!')
-						out_yellow('Запуск через 3 секунд... Ожидайте...')
+						out_green("Успешно пройденный диапазон!")
+						out_yellow("Запуск через 3 секунд... Ожидайте...")
 						time.sleep(3) # Задержка на 3 секунд
 					else:
 						with open("LOG_ERROR.txt", "a", encoding="utf-8") as f:
-							f.write(f'\nERROR: {_setRange['text']}\n')
-						out_red(f'ERROR: {_setRange['text']}')
-						out_yellow('Запуск через 3 секунд... Ожидайте...')
+							f.write(f"\nERROR: {_setRange['text']}\n")
+						out_red(f"ERROR: {_setRange['text']}")
+						out_yellow("Запуск через 3 секунд... Ожидайте...")
 						time.sleep(3) # Задержка на 3 секунд
 		else:
-			if __NUMBER__ != 'random':
-				__NUMBER__ = 'random'
-			out_red(f'ERROR: {_getRange['text']}')
+			if __NUMBER__ != "random":
+				__NUMBER__ = "random"
+			out_red(f"ERROR: {_getRange['text']}")
 			with open("LOG_ERROR.txt", "a", encoding="utf-8") as f:
-				f.write(f'\nERROR: {_getRange['text']}\n')
-			out_yellow('Запуск через 3 секунд... Ожидайте...')
+				f.write(f"\nERROR: {_getRange['text']}\n")
+			out_yellow("Запуск через 3 секунд... Ожидайте...")
 			time.sleep(3) # Задержка на 3 секунд
