@@ -24,6 +24,12 @@ python StartScript.py -p 71 -n 487238
 ```
 start.bat
 
+## New
+  ### 12.12.2025
+  - Added -b --brute modes. Works only in conjunction with -n. For example, -n 123; after the check, the next range will be 124, etc.
+  
+  - Added auto-creation of a launch file backup. For example, "start_VSbackup_gpu0.bat" where 0 is the number from -g gpu.
+
 ## How does it work?
 
 Puzzle ranges are divided into segments. For Puzzle 71, this means 67,108,864 segments. For each segment, 5 verification addresses are generated that need to be provided to complete the segment.
@@ -58,6 +64,7 @@ options:
                         Number GPU. Default is 0
   -c COMMENT, --comment COMMENT
                         Comment after completing the segment
+  -b, --brute           Modes. Works only in conjunction with -n. For example, -n 123; after the check, the next range will be 124, etc.
   -t, --test            TEST MODE FOR PUZZLE №70, CONSISTS OF 17179869184 SEGMENTS, FOR FAST SEGMENT COMPLETION,
                         EACH SEGMENT IS 2^36. To get FOUND, you need to specify segment number -n 11063563977.
                         Default is off
@@ -162,6 +169,12 @@ python StartScript.py -p 71 -n 487238
 ```
 start.bat
 
+## Обнова
+  ### 12.12.2025
+  - Добавлены режимы -b --brute. Работают только совместно с -n. Например, -n 123; после проверки следующим диапазоном будет 124 и т.д.
+  
+  - Добавлено автосоздание резервной копии файла запуска. Например, "start_VSbackup_gpu0.bat", где 0 — это номер из параметра -g gpu.
+
 ## Как это работает?
 
 Диапазоны пазлов разбиты на области. Для 71-го пазла это 67 108 864 областей. Для каждой области генерируются 5 проверочных адресов, которые нужно указать, чтобы завершить область.
@@ -196,6 +209,7 @@ options:
                         Номер GPU. По умолчанию 0
   -c COMMENT, --comment COMMENT
                         Комментарий после завершения области
+  -b, --brute           Режимы. Работают только совместно с -n. Например, -n 123; после проверки следующим диапазоном будет 124 и т.д.
   -t, --test            ТЕСТОВЫЙ РЕЖИМ ПАЗЛА №70, СОСТОИТ ИЗ 17179869184 ОБЛАСТЕЙ, ДЛЯ БЫСТРОГО ПРОХОЖДЕНИЯ
                         ОБЛАСТИ, КАЖДАЯ ОБЛАСТЬ 2^36. Для того чтобы был FOUND нужно указать номер области -n
                         11063563977. По умолчанию выключен
