@@ -117,12 +117,16 @@ if __name__ == "__main__":
 	parser.add_argument("-p", "--puzzle", type=int, default=71, help="Номер пазла. По умолчанию 71")
 	parser.add_argument("-n", "--number", type=str, default="random", help="Номер области(части). По умолчанию random")
 	parser.add_argument("-c", "--comment", type=str, default="BITCOIN PUZZLE HoMLoL POOL bc1qdn2wng73y80phr7kul5aa24n850f5c82zwq27h", help="Комментарий после завершения области")
+	parser.add_argument("-b", "--brute", action="store_true", help="Работает только совместно с -n. Для последовательной проверки частей")
+	parser.add_argument("--backup", action="store_true", help="Запускает бэкапа")
 	parser.add_argument("-t", "--test", action="store_true", help="ТЕСТОВЫЙ РЕЖИМ ПАЗЛА №70, СОСТОИТ ИЗ 17179869184 ОБЛАСТЕЙ, ДЛЯ БЫСТРОГО ПРОХОЖДЕНИЯ ОБЛАСТИ, КАЖДАЯ ОБЛАСТЬ 2^36. Для того чтобы был FOUND нужно указать номер области -n 11063563977. По умолчанию выключен")
 
 	# Парсим аргументы
 	args = parser.parse_args()
 
 	__TEST__ = args.test
+	__BRUTE__ = args.brute
+	__BACKUP__ = args.backup
 
 	if __TEST__: # ТЕСТОВЫЙ РЕЖИМ ПАЗЛА №70, СОСТОИТ ИЗ 17179869184 ОБЛАСТЕЙ, ДЛЯ БЫСТРОГО ПРОХОЖДЕНИЯ ОБЛАСТИ, КАЖДАЯ ОБЛАСТЬ 2^36. Для того чтобы был FOUND нужно указать номер области -n 11063563977
 		__GPU__ = args.gpu
@@ -173,6 +177,8 @@ if __name__ == "__main__":
 			print(f"\033[0m* ID puzzle: {_getRange['idPuzzle']}")
 			print(f"* Range number: {_getRange['numberRange']}")
 			print(f"* Target Address: \033[42m\033[37m{_getRange['targetAddress']}")
+			if __BRUTE__:
+				print(f"\033[0m* Brute mode: enabled")
 			print(f"\033[0m* Proof addresses:")
 			file_path = f"{main_path}{name_in_file}"
 			with open(file_path, 'w', encoding='utf-8') as file:
@@ -191,7 +197,15 @@ if __name__ == "__main__":
 			if not os.path.exists(f"{main_path}tmp_files_output_{_getRange['idPuzzle']}"):
 				os.makedirs(f"{main_path}tmp_files_output_{_getRange['idPuzzle']}")
 
-			os.system(f"{main_path}VanitySearch.exe -gpuId {__GPU__} -i {main_path}{name_in_file} -o {name_out_file} -start {_getRange['startRangeHex']} -range {_getRange['bits']}")
+			with open(f"start_VSbackup_gpu{__GPU__}.bat", 'w', encoding='utf-8') as file:
+				file.write(str(f"python StartScript.py -p {_getRange['idPuzzle']} -g {__GPU__} -n {_getRange['numberRange']} --backup")+"\n")
+				file.write(str(f"pause")+"\n")
+
+
+			if __BACKUP__:
+				os.system(f"{main_path}VanitySearch.exe -gpuId {__GPU__} -i {main_path}{name_in_file} -o {name_out_file} -start {_getRange['startRangeHex']} -range {_getRange['bits']} -backup")
+			else:
+				os.system(f"{main_path}VanitySearch.exe -gpuId {__GPU__} -i {main_path}{name_in_file} -o {name_out_file} -start {_getRange['startRangeHex']} -range {_getRange['bits']}")
 
 
 			key_pairs = parse_key_file(f'{name_out_file}')
@@ -219,10 +233,13 @@ if __name__ == "__main__":
 						f.write("\n* Error: Not data for send\n")
 				else:
 					_setRange = setRange(__PUZZLE__, numberRange_for_send, key_pairs, __COMMENT__)
-
+					__BACKUP__ = False
 					if _setRange['ok'] == True:
-						if __NUMBER__ != 'random':
-							__NUMBER__ = 'random'
+						if __NUMBER__ != "random":
+							if __BRUTE__:
+								__NUMBER__ = int(__NUMBER__) + 1
+							else:
+								__NUMBER__ = "random"
 						print(_setRange['text'])
 						out_green("Успешно пройденный диапазон!")
 						out_yellow("Запуск через 3 секунд... Ожидайте...")
@@ -234,8 +251,12 @@ if __name__ == "__main__":
 						out_yellow("Запуск через 3 секунд... Ожидайте...")
 						time.sleep(3) # Задержка на 3 секунд
 		else:
+			__BACKUP__ = False
 			if __NUMBER__ != "random":
-				__NUMBER__ = "random"
+				if __BRUTE__:
+					__NUMBER__ = int(__NUMBER__) + 1
+				else:
+					__NUMBER__ = "random"
 			out_red(f"ERROR: {_getRange['text']}")
 			with open("LOG_ERROR.txt", "a", encoding="utf-8") as f:
 				f.write(f"\nERROR: {_getRange['text']}\n")
